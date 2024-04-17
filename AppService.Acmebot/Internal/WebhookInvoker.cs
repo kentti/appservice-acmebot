@@ -84,6 +84,21 @@ public class WebhookInvoker
                 themeColor = "2EB886"
             };
         }
+        else if (_options.Webhook.Contains("discord.com"))
+        {
+            model = new
+            {
+                username = sender,
+                embeds = new[]
+                {
+                    new DiscordEmbed
+                    {
+                        Title = "Acmebot success :white_check_mark:",
+                        Description = $"A new certificate has been issued.\n\n**App Name**: {appName}\n\n**Slot Name**: {slotName}\n\n**Expiration Date**: {expirationDate}\n\n**DNS Names**: {string.Join(", ", dnsNames)}",
+                    }
+                }
+            };
+        }
         else
         {
             model = new
@@ -129,6 +144,21 @@ public class WebhookInvoker
                 title = "Acmebot",
                 text = $"**{functionName}**\n\n**Reason**\n\n{reason}",
                 themeColor = "A30200"
+            };
+        }
+        else if (_options.Webhook.Contains("discord.com"))
+        {
+            model = new
+            {
+                username = sender,
+                embeds = new[]
+                {
+                    new DiscordEmbed
+                    {
+                        Title = "Acmebot error :heavy_exclamation_mark:",
+                        Description = $"Updating a certificate failed.\n\n**{functionName}**\n\n**Reason**\n\n{reason}",
+                    }
+                }
             };
         }
         else
